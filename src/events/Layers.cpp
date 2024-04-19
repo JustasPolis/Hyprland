@@ -166,7 +166,6 @@ void Events::listener_mapLayerSurface(void* owner, void* data) {
     const auto WORKSPACE  = PMONITOR->activeWorkspace;
     const bool FULLSCREEN = WORKSPACE->m_bHasFullscreenWindow && WORKSPACE->m_efFullscreenMode == FULLSCREEN_FULL;
 
-    layersurface->startAnimation(!(layersurface->layer == ZWLR_LAYER_SHELL_V1_LAYER_TOP && FULLSCREEN && !GRABSFOCUS));
     layersurface->readyToDelete = false;
     layersurface->fadingOut     = false;
 
@@ -197,14 +196,11 @@ void Events::listener_unmapLayerSurface(void* owner, void* data) {
 
         layersurface->mapped = false;
 
-        layersurface->startAnimation(false);
         return;
     }
 
     // make a snapshot and start fade
     g_pHyprOpenGL->makeLayerSnapshot(layersurface);
-
-    layersurface->startAnimation(false);
 
     layersurface->mapped = false;
 
